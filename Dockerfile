@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND noninteractive
 LABEL maintainer="colomeramonica@gmail.com"
 RUN  apt-get -y update && apt-get install -y software-properties-common curl apt-transport-https git vim supervisor bzip2
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
@@ -14,7 +15,6 @@ RUN apt-get update && \
     php8.1-imap \
     php8.1-xml \
     php8.1-mysql \
-    php8.1-json \
     php8.1-zip \
     php8.1-fpm \
     php-igbinary \
@@ -36,7 +36,7 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php/8.1/fpm/php-fpm.c
     sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php/8.1/fpm/php.ini
 
 ## Instalação nginx
-RUN apt-get install -y nginx=1.10.*
+RUN apt-get install -y nginx
 
 ## Instalação Composer
 RUN curl -sS https://getcomposer.org/installer | php  -- --install-dir=/bin --version=1.10.10 && \
@@ -64,7 +64,6 @@ RUN echo "alias check-linters=\"yarn run lint -- public/js public/test && \
     vendor/bin/phpstan analyse -l 3 -c phpstan.neon app/ resources/lang/ config/\"" \
     >> ~/.bashrc
 
-COPY files/default /etc/nginx/sites-available/default
-COPY files/index.html /usr/share/nginx/html/index.html
+
 EXPOSE 80
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
