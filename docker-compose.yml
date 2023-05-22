@@ -1,0 +1,33 @@
+version: 1.0.0
+services:
+    web:
+        build: .
+        ports:
+        - "8000:5000"
+    mysql:
+        image: "mysql:5.7.17"
+        container_name: "mysql.docker"
+        mem_limit: 2024M
+        cpu_shares: 4
+        environment:
+            MYSQL_ROOT_PASSWORD: "docker"
+            MYSQL_USER: "root"
+            MYSQL_PASSWORD: "root"
+        volumes:
+            - "/home/docker/mysql/:/var/lib/mysql"
+            - "./shared/mysql/my.cnf:/etc/mysql/conf.d/my.cnf"
+        ports:
+        - "3306:3306"
+
+
+    phpmyadmin-mysql:
+        image: phpmyadmin/phpmyadmin:4.7
+        mem_limit: 128M
+        container_name: "phpmyadmin"
+        restart: always
+        ports:
+            - "3326:80"
+        environment:
+            PMA_HOST: localhost
+            PMA_USER: root
+            PMA_PASSWORD: root

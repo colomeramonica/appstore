@@ -2,7 +2,6 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND noninteractive
 LABEL maintainer="colomeramonica@gmail.com"
 RUN  apt-get -y update && apt-get install -y software-properties-common curl apt-transport-https git vim supervisor bzip2
-RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 
 ## Instalação do PHP
 RUN apt-get update && \
@@ -54,15 +53,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 
 # Atalhos
 RUN echo "alias cache-clear=\"php artisan cache:clear && php artisan config:clear && php artisan twig:clean\"" >> ~/.bashrc
-
-RUN echo "alias check-linters=\"yarn run lint -- public/js public/test && \
-    php vendor/bin/grumphp run && vendor/bin/phpcs app/ --extensions=php --standard=ruleset.xml && \
-    vendor/bin/phpmd app/ text phpmd.xml && \
-    vendor/bin/phpmd resources/lang/ text phpmd.xml && \
-    vendor/bin/phpmd config/ text phpmd.xml && \
-    vendor/bin/phpmd modules/ text phpmd.xml && \
-    vendor/bin/phpstan analyse -l 3 -c phpstan.neon app/ resources/lang/ config/\"" \
-    >> ~/.bashrc
 
 
 EXPOSE 80
