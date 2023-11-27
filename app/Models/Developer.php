@@ -11,33 +11,20 @@ class Developer extends Model
 
     private $table = 'developer';
 
-    private String $name;
+    protected $primaryKey = 'dev_id';
 
-    private String $email;
+    public $incrementing = true;
 
-    private String $phone;
+    public $timestamps = true;
 
-    private function setName($name) {
-        $this->name = $name;
-    }
+    protected $fillable = [
+        'company_name',
+        'email',
+        'contact_number'
+    ];
 
-    public function getName() {
-        return $this->name;
-    }
-
-    private function setEmail($email) {
-        $this->email = $email;
-    }
-
-    public function getEmail() {
-        return $this->email;
-    }
-
-    private function setPhone($phone) {
-        $this->phone = $phone;
-    }
-
-    public function getPhone() {
-        return $this->phone;
+    public function apps()
+    {
+        return $this->hasMany(App::class, 'developer_id');
     }
 }

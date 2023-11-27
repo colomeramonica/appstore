@@ -12,25 +12,14 @@ class Category extends Model
 
     public $table = 'category';
 
-    private String $name;
+    protected $fillable = [
+        'name',
+        'description',
+        'status'
+    ];
 
-    private String $description;
-
-    private App $app;
-
-    private function setName($name) {
-        $this->name = $name;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    private function setDescription($description) {
-        $this->description = $description;
-    }
-
-    public function getDescription() {
-        return $this->description;
+    public function app()
+    {
+        return $this->belongsToMany(App::class, 'apps_category', 'app_id', 'category_id');
     }
 }
