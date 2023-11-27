@@ -9,11 +9,17 @@ class App extends Model
 {
     use HasFactory;
 
-    public $table = 'application';
+    protected $table = 'app';
 
-    private String $appName;
+    protected $primaryKey = 'app_id';
 
-    private String $appDescription;
+    public $incrementing = true;
+
+    public $timestamps = true;
+
+    private String $name;
+
+    private String $description;
 
     private bool $status;
 
@@ -21,21 +27,21 @@ class App extends Model
 
     private Category $category;
 
-    private Partner $partner;
+    private Developer $developer;
 
     const APP_DISABLED = 0;
 
     const APP_ENABLED = 1;
 
-    private function setAppName(String $appName)
+    private function setName(String $name)
     {
-        $this->appName = $appName;
+        $this->name = $name;
         return $this;
     }
 
-    public function getAppName()
+    public function getName()
     {
-        return $this->appName;
+        return $this->name;
     }
 
     private function setDescription(String $description)
@@ -46,7 +52,7 @@ class App extends Model
 
     public function getDescription()
     {
-        return $this->appDescription;
+        return $this->description;
     }
 
     private function setStatus(bool $status)
@@ -66,7 +72,7 @@ class App extends Model
         'display_options',
         'status',
         'category_id',
-        'partner_id'
+        'developer_id'
     ];
 
     public static $availableOptions = [
@@ -74,53 +80,4 @@ class App extends Model
         'Exibir em todas lojas e no catálogo' => 2,
         'Exibir em todas lojas e ocultar do catálogo' => 3
     ];
-
-    public function getAllApps()
-    {
-
-    }
-
-    public function getAppById($appId)
-    {
-
-    }
-
-    public function getAppByPartner($partnerId)
-    {
-
-    }
-
-    /**
-     * Busca os aplicativos pelo id da categoria
-     *
-     * @param string $categoryId id da categoria
-     * @return object Collection com os aplicativos
-     */
-    public function getAppByCategory($categoryId)
-    {
-        return $this->belongsToMany(
-            '\App\Models\Category',
-            'name',
-            'description',
-            'status',
-            'display_options',
-        )
-            ->withPivot('id')
-            ->where('category_id', '=', $categoryId);
-    }
-
-    public function createApp($data)
-    {
-        dd($data);
-    }
-
-    public function updateApp($appId, App $data)
-    {
-
-    }
-
-    public function deleteApp($appId)
-    {
-
-    }
 }
