@@ -17,8 +17,8 @@ class DeveloperSeeder extends Seeder
         for ($i = 0; $i < $numberOfRecords; $i++) {
             DB::table('developer')->insert([
                 'company_name' => 'Developer Company ' . ($i + 1),
-                'email' => 'developer' . ($i + 1) . '@gmail.com',
-                'contact_number' => '123456789' . $i, 
+                'contact_email' => 'developer' . ($i + 1) . '@gmail.com',
+                'contact_phone' => '123456789' . $i, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
