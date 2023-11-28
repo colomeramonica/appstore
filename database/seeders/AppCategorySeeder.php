@@ -5,20 +5,19 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CategorySeeder extends Seeder
+class AppCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $numberOfRecords = 5;
+        $numberOfRecords = 10;
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
-            DB::table('category')->insert([
-                'name' => 'Category ' . ($i + 1),
-                'description' => 'Description for Category ' . ($i + 1),
-                'status' => rand(0, 1), 
+            DB::table('app_category')->insert([
+                'app_id' => rand(2, 21), 
+                'category_id' => rand(1, 5), 
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Interfaces\AppRepositoryInterface;
-use App\Repositories\AppRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        app()->singleton(AppRepositoryInterface::class, function () {
-            return app(AppRepository::class);
-        });
+        //
     }
 }

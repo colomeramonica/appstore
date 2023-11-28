@@ -9,10 +9,8 @@ class AppSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $numberOfRecords = 20;
 
@@ -21,7 +19,9 @@ class AppSeeder extends Seeder
                 'dev_id' => rand(1, 10), 
                 'name' => 'App ' . ($i + 1),
                 'description' => 'Description for App ' . ($i + 1),
+                'price' => rand(2, 200) / 100,
                 'status' => rand(0, 1), 
+                'rating' => rand(0, 5) / 100,
                 'display_option' => rand(1, 3), 
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -29,4 +29,3 @@ class AppSeeder extends Seeder
         }
     }
 }
-
