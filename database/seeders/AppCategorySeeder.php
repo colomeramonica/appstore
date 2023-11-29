@@ -16,7 +16,7 @@ class AppCategorySeeder extends Seeder
 
         for ($i = 0; $i < $numberOfRecords; $i++) {
             DB::table('app_category')->insert([
-                'app_id' => rand(2, 21), 
+                'app_id' => rand(1, 20), 
                 'category_id' => rand(1, 5), 
                 'created_at' => now(),
                 'updated_at' => now(),

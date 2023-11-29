@@ -6,16 +6,25 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /app
+    container_name: appstore
+    tty: true
+    restart: unless-stopped
     volumes:
       - .:/app
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     ports:
-      - "8080:80"
+      - "8000:8000"
     depends_on:
       - mysql
+    networks:
+      - app-network
 
   mysql:
     image: mysql:8.0
     container_name: mysql
+    tty: true
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: appstore
       MYSQL_ROOT_PASSWORD: root
@@ -23,6 +32,11 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -30,7 +44,32 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
+    tty: true
     ports:
       - "8081:80"
     depends_on:
       - mysql
+    networks:
+      - app-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
