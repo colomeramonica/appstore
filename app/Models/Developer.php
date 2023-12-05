@@ -9,9 +9,7 @@ class Developer extends Model
 {
     use HasFactory;
 
-    private $table = 'developer';
-
-    protected $primaryKey = 'dev_id';
+    public $table = 'developer';
 
     public $incrementing = true;
 
@@ -19,12 +17,7 @@ class Developer extends Model
 
     protected $fillable = [
         'company_name',
-        'email',
-        'contact_number'
+        'contact_email',
+        'contact_phone'
     ];
-
-    public function apps()
-    {
-        return $this->hasMany(App::class, 'developer_id');
-    }
 }

@@ -1,9 +1,5 @@
+# Stage 1: PHP Application
 FROM php:8.1-fpm
-
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
-
-# Set working directory
 WORKDIR /app
 
 # Install dependencies
@@ -11,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     git \
     zip \
     unzip \
+    npm \
     && docker-php-ext-install pdo_mysql
 
 # Install composer

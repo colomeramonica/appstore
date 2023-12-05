@@ -15,27 +15,57 @@ class AppRepository implements AppRepositoryInterface
 
     public function getAppById($appId)
     {
-        //
+        $app = App::find($appId);
+
+        return $app;
     }
 
     public function getAppByCategory($categoryId)
     {
-       //
+       $app = App::where('status', 1)
+            ->join('app_category', 'app_category.category_id', '=', $categoryId)
+            ->join('category', 'category.id', '=', 'app_category.id')
+            ->get();
+
+        return $app;
     }
 
-    public function getAppByPartner($partnerId)
+    public function getAppByDev($devId)
     {
-        //
+        $app = App::where([
+            'status' => 1,
+            'dev_id' => $devId
+        ])->get();
+
+        return $app;
     }
 
-    public function createApp($app)
+    public function store($data)
     {
-        return App::create($app);
+        $app = new App;
+
+        $app->name = $data['name'];
+        $app->description = $data['description'];
+        $app->price = $data['price'];
+        $app->dev_id = $data['dev_id'];
+
+        $app->save();
+
+        return $app;
+
     }
 
     public function updateApp($appId, $data)
     {
-        //
+        $app = App::find($appId);
+
+        $app->description = $data['description'];
+        $app->price = $data['price'];
+        $app->rating = $data['rating'];
+
+        $app->save();
+
+        return $app;
     }
 
     public function deleteApp($appId)

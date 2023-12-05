@@ -5,16 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /app
     container_name: appstore
     tty: true
     restart: unless-stopped
+    working_dir: /var/www
     volumes:
-      - .:/app
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    ports:
-      - "8000:8000"
     depends_on:
       - mysql
     networks:
@@ -51,6 +48,31 @@ services:
       - mysql
     networks:
       - app-network
+
+  redis:
+    container_name: "redis"
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+        - "${FORWARD_REDIS_PORT:-6379}:6379"
+    healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        retries: 3
+        timeout: 5s
+    networks:
+        - app-network
+
+  npm:
+      container_name: "npm"
+      image: node:current-alpine
+      volumes:
+          - ./src:/var/www/html
+      ports:
+          - "${FORWARD_NPM_PORT:-3000}:3000"
+      working_dir: /var/www/html
+      entrypoint: ["npm"]
+      networks:
+          - app-network
 
   webserver:
     image: nginx:alpine

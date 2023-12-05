@@ -11,8 +11,6 @@ class App extends Model
 
     protected $table = 'app';
 
-    protected $primaryKey = 'app_id';
-
     public $incrementing = true;
 
     public $timestamps = true;
@@ -22,8 +20,9 @@ class App extends Model
         'description',
         'display_options',
         'status',
-        'category_id',
-        'developer_id'
+        'price',
+        'rating',
+        'dev_id'
     ];
 
     public static $availableOptions = [
@@ -34,11 +33,11 @@ class App extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'apps_category', 'app_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'app_category', 'app_id', 'category_id');
     }
 
     public function developer()
     {
-        return $this->belongsTo(Developer::class, 'developer_id');
+        return $this->belongsTo(Developer::class, 'dev_id');
     }
 }
