@@ -20,6 +20,6 @@ class Category extends Model
 
     public function app()
     {
-        return $this->belongsToMany(App::class, 'apps_category', 'app_id', 'category_id');
+        return $this->belongsToMany(App::class, 'app_category', 'app_id', 'category_id');
     }
 }

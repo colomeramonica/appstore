@@ -9,7 +9,7 @@ class AppsCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'apps_category';
+    protected $table = 'app_category';
 
     protected $fillable = [
         'app_id',
@@ -20,11 +20,11 @@ class AppsCategory extends Model
 
     public function app()
     {
-        return $this->belongsTo(App::class, 'app_id');
+        return $this->belongsTo(App::class, 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'id');
     }
 }

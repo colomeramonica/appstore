@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('create');
-});
-
-Route::group(['prefix' => 'app'], function () {
-    Route::post('/create', 'App\Http\Controllers\AppController@create');
-    Route::get('/list', 'App\Http\Controllers\AppController@list');
+    return view('welcome');
 });
 
